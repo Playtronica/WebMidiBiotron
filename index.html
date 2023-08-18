@@ -382,4 +382,7 @@ function returnDefault() {
 
 document.getElementById("submit").addEventListener("click", () => sendMidiMessage());
 document.getElementById("default_submit").addEventListener("click", () => returnDefault());
+
+document.addEventListener( 'keyup', event => {
+    if( event.code === 'Enter' ) document.getElementById("submit").click()});
 </script>
