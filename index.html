@@ -158,15 +158,31 @@
             <h2>Velocity</h2>
             <div class="container">
                 <div class="col w-100">
-                    <div class="row">
-                        <label for="fib_pow_input">Plant Velocity</label>
-                        <input class="form-control" type="value" id="vel_plant_input"  value="127" min="0" max="127" oninput="this.nextElementSibling.value = this.value"/>
-                        <input type="range" class="settings_input" value="127" min="0" max="127" oninput="this.previousElementSibling.value = this.value"/>
+                    <div class="row align-items-center">
+                        <div class="col-10">
+                            <label for="fib_pow_input">Plant Velocity</label>
+                            <input class="form-control" type="value" id="vel_plant_input"  value="127" min="0" max="127" oninput="this.nextElementSibling.value = this.value"/>
+                            <input type="range" class="settings_input" value="127" min="0" max="127" oninput="this.previousElementSibling.value = this.value"/>
+                        </div>
+                        <div class="col-2 ">
+                            <label class="switch">
+                                <input id="vel_plant_checkbox" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
-                    <div class="row">
-                        <label for="fib_pow_input">Light Velocity</label>
-                        <input class="form-control" type="value" id="vel_light_input" value="127" min="0" max="127" oninput="this.nextElementSibling.value = this.value"/>
-                        <input type="range" class="settings_input" value="127" min="0" max="127" oninput="this.previousElementSibling.value = this.value"/>
+                    <div class="row align-items-center">
+                        <div class="col-10">
+                            <label for="fib_pow_input">Light Velocity</label>
+                            <input class="form-control" type="value" id="vel_light_input" value="127" min="0" max="127" oninput="this.nextElementSibling.value = this.value"/>
+                            <input type="range" class="settings_input" value="127" min="0" max="127" oninput="this.previousElementSibling.value = this.value"/>
+                        </div>
+                        <div class="col-2 ">
+                            <label class="switch">
+                                <input id="vel_light_checkbox" type="checkbox" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -385,4 +401,30 @@ document.getElementById("default_submit").addEventListener("click", () => return
 
 document.addEventListener( 'keyup', event => {
     if( event.code === 'Enter' ) document.getElementById("submit").click()});
+
+document.getElementById('vel_plant_checkbox').addEventListener("click", () => {
+    document.getElementById('vel_plant_input').disabled = !document.getElementById('vel_plant_checkbox').checked;
+    document.getElementById('vel_plant_input').nextElementSibling.disabled = !document.getElementById('vel_plant_checkbox').checked;
+    if (document.getElementById('vel_plant_checkbox').checked) {
+        document.getElementById('vel_plant_input').value = 127
+        document.getElementById('vel_plant_input').nextElementSibling.value = 127;
+    }
+    else {
+        document.getElementById('vel_plant_input').value = 0
+        document.getElementById('vel_plant_input').nextElementSibling.value = 0
+    }
+})
+
+document.getElementById('vel_light_checkbox').addEventListener("click", () => {
+    document.getElementById('vel_light_input').disabled = !document.getElementById('vel_light_checkbox').checked;
+    document.getElementById('vel_light_input').nextElementSibling.disabled = !document.getElementById('vel_light_checkbox').checked;
+    if (document.getElementById('vel_light_checkbox').checked) {
+        document.getElementById('vel_light_input').value = 127
+        document.getElementById('vel_light_input').nextElementSibling.value = 127;
+    }
+    else {
+        document.getElementById('vel_light_input').value = 0
+        document.getElementById('vel_light_input').nextElementSibling.value = 0
+    }
+})
 </script>
