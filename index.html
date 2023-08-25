@@ -258,18 +258,23 @@ function initDevices(midi) {
         midiOut.push(output.value);
     }
 
+
     displayDevices();
 }
 
 function displayDevices() {
     let device = document.getElementById("device")
+   
     device.innerHTML = "";
     let i = 0;
     for (let output of midiOut) {
         let newOption = new Option(output.name, i.toString());
         i++;
+        output.send([]);
         device.add(newOption);
     }
+
+    midiOut[document.getElementById("device").value].send([]);
 }
 
 function sleep(milliseconds) {
