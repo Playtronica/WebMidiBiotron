@@ -229,6 +229,40 @@ for (let i = 0; i < Scales.length; i++) {
     scale.add(newOption);
 }
 
+
+function loadLastValues() {
+    document.getElementById("bpm_input").value = localStorage.getItem("bpm_input")
+    document.getElementById("bpm_input_text").value = localStorage.getItem("bpm_input")
+
+    document.getElementById("bpm_plant_note_off_input").value = localStorage.getItem("bpm_plant_note_off_input")
+    document.getElementById("bpm_plant_note_off_input").previousElementSibling.value = localStorage.getItem("bpm_plant_note_off_input")
+
+    document.getElementById("bpm_light_input").value = localStorage.getItem("bpm_light_input")
+    document.getElementById("bpm_light_input").previousElementSibling.value = localStorage.getItem("bpm_light_input")
+
+    document.getElementById("fib_pow_input").value = localStorage.getItem("fib_pow_input")
+    document.getElementById("fib_pow_input").previousElementSibling.value = localStorage.getItem("fib_pow_input")
+
+    document.getElementById("fib_first_input").value = localStorage.getItem("fib_first_input")
+    document.getElementById("fib_first_input").previousElementSibling.value = localStorage.getItem("fib_first_input")
+
+    document.getElementById("smooth_input").value = localStorage.getItem("smooth_input");
+    document.getElementById("smooth_input").nextElementSibling.value = localStorage.getItem("smooth_input");
+
+    scale.value = localStorage.getItem("scale_value")
+
+    document.getElementById("vel_plant_input").value = localStorage.getItem("vel_plant_input")
+    document.getElementById("vel_plant_input").nextElementSibling.value = localStorage.getItem("vel_plant_input")
+
+    document.getElementById("vel_light_input").value = localStorage.getItem("vel_light_input")
+    document.getElementById("vel_light_input").nextElementSibling.value = localStorage.getItem("vel_light_input")
+
+    document.getElementById("randomness_input").checked = localStorage.getItem("randomness_input") == "true"
+    document.getElementById("same_note_input").checked = localStorage.getItem("same_note_input") == "true"
+}
+
+loadLastValues();
+
 connect();
 
 function connect() {
@@ -303,7 +337,8 @@ function sendMidiMessage() {
     
     console.log(msgOn);
     device.send(msgOn);
-    
+    localStorage.setItem("bpm_input", BPM_value)
+
     sleep(100);
 
 
@@ -313,7 +348,8 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
-    
+    localStorage.setItem("bpm_plant_note_off_input", parseInt(document.getElementById("bpm_plant_note_off_input").value))
+
     sleep(100);
 
 
@@ -323,7 +359,7 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
-    
+    localStorage.setItem("bpm_light_input", parseInt(document.getElementById("bpm_light_input").value))
     sleep(100);
     
     msgOn = [240, 11, 1]
@@ -333,6 +369,9 @@ function sendMidiMessage() {
     
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("fib_pow_input", parseInt(document.getElementById("fib_pow_input").value))
+    localStorage.setItem("fib_first_input", parseInt(document.getElementById("fib_first_input").value))
+
     sleep(100);
     
     msgOn = [240, 11, 2]
@@ -341,6 +380,8 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("smooth_input", parseInt(document.getElementById("smooth_input").value))
+
     sleep(100);
     
     msgOn = [240, 11, 3]
@@ -349,6 +390,8 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("scale_value", parseInt(scale.value))
+
     sleep(100);
     
     msgOn = [240, 11, 4, 1]
@@ -357,6 +400,8 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("vel_plant_input", parseInt(document.getElementById("vel_plant_input").value))
+
     sleep(100);
     
     msgOn = [240, 11, 4, 2]
@@ -365,6 +410,8 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("vel_light_input", parseInt(document.getElementById("vel_light_input").value))
+
     sleep(100);
     
     msgOn = [240, 11, 8]
@@ -378,6 +425,7 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("randomness_input", document.getElementById("randomness_input").checked)
     sleep(100);
     
     msgOn = [240, 11, 9]
@@ -391,10 +439,24 @@ function sendMidiMessage() {
 
     console.log(msgOn);
     device.send(msgOn);
+    localStorage.setItem("same_note_input", document.getElementById("same_note_input").checked)
     sleep(100);
 }
 
 function returnDefault() {
+    localStorage.setItem("bpm_input", 60)
+    localStorage.setItem("bpm_plant_note_off_input", 100)
+    localStorage.setItem("bpm_light_input", 4)
+    localStorage.setItem("fib_pow_input", 50)
+    localStorage.setItem("fib_first_input", 10)
+    localStorage.setItem("smooth_input", 0)
+    localStorage.setItem("scale_value", 0)
+    localStorage.setItem("vel_plant_input", 127)
+    localStorage.setItem("vel_light_input", 127)
+    localStorage.setItem("randomness_input", "true")
+    localStorage.setItem("same_note_input", "true")
+    loadLastValues();
+
     const device = midiOut[document.getElementById("device").value];
     let msgOn = [240, 11, 5, 247];
     console.log(msgOn);
