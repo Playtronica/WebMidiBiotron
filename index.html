@@ -231,6 +231,10 @@ for (let i = 0; i < Scales.length; i++) {
 
 
 function loadLastValues() {
+    if (!localStorage.getItem("bpm_input")) {
+        returnDefault();
+    } 
+
     document.getElementById("bpm_input").value = localStorage.getItem("bpm_input")
     document.getElementById("bpm_input_text").value = localStorage.getItem("bpm_input")
 
