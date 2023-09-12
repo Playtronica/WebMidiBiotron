@@ -87,7 +87,7 @@
         }
     </style>
 </head>
-    <body class="m-2">
+<body class="m-2">
     <h1 class="text-center">Bioton change settings</h1>
     <div class="form-floating mb-3">
       <select id="device" class="form-control"></select>
@@ -202,10 +202,8 @@
             <h2>Same Note</h2>
             <div class="container">
                 <div class="col w-100">
-                    <label class="switch">
-                        <input id="same_note_input" type="checkbox" checked>
-                        <span class="slider round"></span>
-                    </label>
+                    <input class="form-control" type="value" id="same_note_input" value="0" min="0" max="10" oninput="this.nextElementSibling.value = this.value"/>
+                    <input type="range" class="settings_input" value="0" min="0" max="10" oninput="this.previousElementSibling.value = this.value"/>
                 </div>
             </div>
         </div>
@@ -262,7 +260,9 @@ function loadLastValues() {
     document.getElementById("vel_light_input").nextElementSibling.value = localStorage.getItem("vel_light_input")
 
     document.getElementById("randomness_input").checked = localStorage.getItem("randomness_input") == "true"
-    document.getElementById("same_note_input").checked = localStorage.getItem("same_note_input") == "true"
+
+    document.getElementById("same_note_input").value = localStorage.getItem("same_note_input")
+    document.getElementById("same_note_input").nextElementSibling.value = localStorage.getItem("same_note_input")
 }
 
 loadLastValues();
@@ -433,17 +433,12 @@ function sendMidiMessage() {
     sleep(100);
     
     msgOn = [240, 11, 9]
-    if (document.getElementById("same_note_input").checked) {
-        msgOn.push(1);
-    }
-    else {
-        msgOn.push(0);
-    }
+    msgOn.push(parseInt(document.getElementById("same_note_input").value));
     msgOn.push(247);
 
     console.log(msgOn);
     device.send(msgOn);
-    localStorage.setItem("same_note_input", document.getElementById("same_note_input").checked)
+    localStorage.setItem("same_note_input", document.getElementById("same_note_input").value)
     sleep(100);
 }
 
@@ -458,7 +453,7 @@ function returnDefault() {
     localStorage.setItem("vel_plant_input", 127)
     localStorage.setItem("vel_light_input", 127)
     localStorage.setItem("randomness_input", "true")
-    localStorage.setItem("same_note_input", "true")
+    localStorage.setItem("same_note_input", 0)
     loadLastValues();
 
     const device = midiOut[document.getElementById("device").value];
