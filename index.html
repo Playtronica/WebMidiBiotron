@@ -546,6 +546,7 @@ droparea.addEventListener("drop", (e) => {
     reader.onload = function(event) {
         let i = 0;
         const params = event.target.result.split(";")
+        console.log(params);
         localStorage.setItem("bpm_input", parseInt(params[i++]))
         localStorage.setItem("bpm_plant_note_off_input", parseInt(params[i++]))
         localStorage.setItem("bpm_light_input", parseInt(params[i++]))
