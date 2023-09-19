@@ -217,12 +217,14 @@
             </div>
         </div>
         <button id="submit" class="btn btn-primary mb-1" style="width: 70%">Send</button>
-        <button id="default_submit" class="btn btn-primary" style="width: 70%">Return default</button>
+        <button id="default_submit" class="btn btn-primary mb-1" style="width: 70%">Return default</button>
+        <button id="create_preset" class="btn btn-primary mb-1" style="width: 70%">Create Preset</button>
     </div>
     
     </body>
 </html>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 <script>
 
 let midiIn = [];
@@ -504,6 +506,24 @@ document.getElementById('vel_light_checkbox').addEventListener("click", () => {
     }
 })
 
+document.getElementById('create_preset').addEventListener("click", () => {
+    let params = []
+    params.push(document.getElementById("bpm_input").value)
+    params.push(document.getElementById("bpm_plant_note_off_input").value)
+    params.push(document.getElementById("bpm_light_input").value)
+    params.push(document.getElementById("fib_pow_input").value)
+    params.push(document.getElementById("fib_first_input").value)
+    params.push(document.getElementById("smooth_input").value)
+    params.push(scale.value)
+    params.push(document.getElementById("vel_plant_input").value) 
+    params.push(document.getElementById("vel_light_input").value)
+    params.push(document.getElementById("randomness_input").checked) 
+    params.push(document.getElementById("same_note_input").value)
+    console.log(params.join(";"));
+    var myFile = new File([params.join(";")], "params_biotron.txt", {type: "text/plain;charset=utf-8"});
+    saveAs(myFile);
+})
+
 const droparea = document.querySelector(".droparea");
 
 droparea.addEventListener("dragover", (e) => {
@@ -522,14 +542,26 @@ function readFile(file) {
 
 droparea.addEventListener("drop", (e) => {
     e.preventDefault();
-    
-    var file = e.dataTransfer.files[0], reader = new FileReader();
+    var file = e.dataTransfer.files[0],reader = new FileReader();
     reader.onload = function(event) {
-        console.log(event.target);
-        holder.innerText = event.target.result;
+        let i = 0;
+        const params = event.target.result.split(";")
+        localStorage.setItem("bpm_input", int(params[i++]))
+        localStorage.setItem("bpm_plant_note_off_input", int(params[i++]))
+        localStorage.setItem("bpm_light_input", int(params[i++]))
+        localStorage.setItem("fib_pow_input", int(params[i++]))
+        localStorage.setItem("fib_first_input", int(params[i++]))
+        localStorage.setItem("smooth_input", int(params[i++]))
+        localStorage.setItem("scale_value", int(params[i++]))
+        localStorage.setItem("vel_plant_input", int(params[i++]))
+        localStorage.setItem("vel_light_input", int(params[i++]))
+        localStorage.setItem("randomness_input", params[i++])
+        localStorage.setItem("same_note_input", int(params[i++]))
+        loadLastValues();
     };
     console.log(file);
-    reader.readAsText(file);
+    reader.readAsDataURL(file);
+    
 
     // console.log(reader.readAsArrayBuffer(param))
 })
