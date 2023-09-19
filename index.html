@@ -545,6 +545,8 @@ droparea.addEventListener("drop", (e) => {
     var file = e.dataTransfer.files[0],reader = new FileReader();
     reader.onload = function(event) {
         let i = 0;
+        console.log(event.target);
+        console.log(event.target.result)
         const params = event.target.result.split(";")
         console.log(params);
         localStorage.setItem("bpm_input", parseInt(params[i++]))
