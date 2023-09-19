@@ -532,15 +532,6 @@ droparea.addEventListener("dragover", (e) => {
     e.preventDefault();
 })
 
-function readFile(file) {                                                       
-    var reader = new FileReader();
-    reader.onload = readSuccess;                                            
-    function readSuccess(evt) { 
-        var field = document.getElementById('main');                        
-        field.innerHTML = evt.target.result;                                
-    };
-    reader.readAsText(file);                                              
-} 
 
 droparea.addEventListener("drop", (e) => {
     e.preventDefault();
@@ -565,7 +556,7 @@ droparea.addEventListener("drop", (e) => {
         loadLastValues();
     };
     console.log(file);
-    reader.readAsDataURL(file);
+    reader.readAsText(file);
     
 
     // console.log(reader.readAsArrayBuffer(param))
