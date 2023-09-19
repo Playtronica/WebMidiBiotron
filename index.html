@@ -538,10 +538,9 @@ droparea.addEventListener("drop", (e) => {
     var file = e.dataTransfer.files[0],reader = new FileReader();
     reader.onload = function(event) {
         let i = 0;
-        console.log(event.target);
-        console.log(event.target.result)
+        
         const params = event.target.result.split(";")
-        console.log(params);
+        if (params.length != 11) return;
         localStorage.setItem("bpm_input", parseInt(params[i++]))
         localStorage.setItem("bpm_plant_note_off_input", parseInt(params[i++]))
         localStorage.setItem("bpm_light_input", parseInt(params[i++]))
@@ -556,6 +555,7 @@ droparea.addEventListener("drop", (e) => {
         loadLastValues();
     };
     console.log(file);
+    if (file.type != "text/plain") return
     reader.readAsText(file);
     
 
