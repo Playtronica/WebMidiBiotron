@@ -546,17 +546,17 @@ droparea.addEventListener("drop", (e) => {
     reader.onload = function(event) {
         let i = 0;
         const params = event.target.result.split(";")
-        localStorage.setItem("bpm_input", int(params[i++]))
-        localStorage.setItem("bpm_plant_note_off_input", int(params[i++]))
-        localStorage.setItem("bpm_light_input", int(params[i++]))
-        localStorage.setItem("fib_pow_input", int(params[i++]))
-        localStorage.setItem("fib_first_input", int(params[i++]))
-        localStorage.setItem("smooth_input", int(params[i++]))
-        localStorage.setItem("scale_value", int(params[i++]))
-        localStorage.setItem("vel_plant_input", int(params[i++]))
-        localStorage.setItem("vel_light_input", int(params[i++]))
+        localStorage.setItem("bpm_input", parseInt(params[i++]))
+        localStorage.setItem("bpm_plant_note_off_input", parseInt(params[i++]))
+        localStorage.setItem("bpm_light_input", parseInt(params[i++]))
+        localStorage.setItem("fib_pow_input", parseInt(params[i++]))
+        localStorage.setItem("fib_first_input", parseInt(params[i++]))
+        localStorage.setItem("smooth_input", parseInt(params[i++]))
+        localStorage.setItem("scale_value", parseInt(params[i++]))
+        localStorage.setItem("vel_plant_input", parseInt(params[i++]))
+        localStorage.setItem("vel_light_input", parseInt(params[i++]))
         localStorage.setItem("randomness_input", params[i++])
-        localStorage.setItem("same_note_input", int(params[i++]))
+        localStorage.setItem("same_note_input", parseInt(params[i++]))
         loadLastValues();
     };
     console.log(file);
