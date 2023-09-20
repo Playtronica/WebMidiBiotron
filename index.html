@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <meta charset="UTF-8">
-<html class="droparea" lang="ru">
+<html lang="ru">
 <head>
     <title>Bioton change settings</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -90,11 +90,19 @@
         }
         
         
-
-        @media (max-width: 300px) {
-            body {
-                font-size: 200%;
-            }
+        .droparea {
+            padding: 15px;
+        
+            /* background: rgba(255, 248, 248, 0.7); */
+        }
+        #dropZone {
+            border: 2px dashed #0072f5;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+            padding: 50px;
+            text-align: center;
+            font: 21pt bold arial;
+            color: #0072f5;
         }
     </style>
 </head>
@@ -221,6 +229,14 @@
         <button id="submit" class="btn btn-primary mb-1" style="width: 70%">Send</button>
         <button id="default_submit" class="btn btn-primary mb-1" style="width: 70%">Return default</button>
         <button id="create_preset" class="btn btn-primary mb-1" style="width: 70%">Create Preset</button>
+        <div class="droparea">
+            
+            <div id="dropZone" class="text-center">
+                <input type="file" id="load_preset" style="display: none;"/>
+                <p>Drop preset here</p>
+            </div>
+            
+        </div>
     </div>
     
     </body>
@@ -232,6 +248,8 @@
 let midiIn = [];
 let midiOut = [];
 let notesOn = new Map(); 
+
+presets = []
 
 const Scales = ["Major", "Minor", "Chrom", "Dorian", "Mixolydian", "Lydian", "Wholetone", "Minblues", "Minpen", "Majpen", "Diminished"];
 let scale = document.getElementById("scale")
@@ -528,6 +546,10 @@ document.getElementById('create_preset').addEventListener("click", () => {
 
 const droparea = document.querySelector(".droparea");
 
+droparea.addEventListener("click", () => {
+    document.getElementById("load_preset").click();
+})
+
 droparea.addEventListener("dragover", (e) => {
     e.preventDefault();
 })
@@ -535,7 +557,7 @@ droparea.addEventListener("dragover", (e) => {
 
 droparea.addEventListener("drop", (e) => {
     e.preventDefault();
-    var file = e.dataTransfer.files[0],reader = new FileReader();
+    var file = e.dataTransfer.files[0], reader = new FileReader();
     reader.onload = function(event) {
         let i = 0;
         
@@ -561,4 +583,30 @@ droparea.addEventListener("drop", (e) => {
 
     // console.log(reader.readAsArrayBuffer(param))
 })
+
+
+document.getElementById("load_preset").addEventListener("change", (e) => {
+    var file = e.srcElement.files[0], reader = new FileReader();
+    reader.onload = function(event) {
+        let i = 0;
+        
+        const params = event.target.result.split(";")
+        if (params.length != 11) return;
+        localStorage.setItem("bpm_input", parseInt(params[i++]))
+        localStorage.setItem("bpm_plant_note_off_input", parseInt(params[i++]))
+        localStorage.setItem("bpm_light_input", parseInt(params[i++]))
+        localStorage.setItem("fib_pow_input", parseInt(params[i++]))
+        localStorage.setItem("fib_first_input", parseInt(params[i++]))
+        localStorage.setItem("smooth_input", parseInt(params[i++]))
+        localStorage.setItem("scale_value", parseInt(params[i++]))
+        localStorage.setItem("vel_plant_input", parseInt(params[i++]))
+        localStorage.setItem("vel_light_input", parseInt(params[i++]))
+        localStorage.setItem("randomness_input", params[i++])
+        localStorage.setItem("same_note_input", parseInt(params[i++]))
+        loadLastValues();
+    };
+    console.log(file);
+    if (file.type != "text/plain") return
+    reader.readAsText(file);
+});
 </script>
