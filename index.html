@@ -591,6 +591,7 @@ document.getElementById("load_preset").addEventListener("change", (e) => {
         let i = 0;
         
         const params = event.target.result.split(";")
+        console.log(params)
         if (params.length != 11) return;
         localStorage.setItem("bpm_input", parseInt(params[i++]))
         localStorage.setItem("bpm_plant_note_off_input", parseInt(params[i++]))
@@ -608,5 +609,6 @@ document.getElementById("load_preset").addEventListener("change", (e) => {
     console.log(file);
     if (file.type != "text/plain") return
     reader.readAsText(file);
+    document.getElementById("load_preset").value="";
 });
 </script>
